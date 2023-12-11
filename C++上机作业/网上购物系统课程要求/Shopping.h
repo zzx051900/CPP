@@ -4,9 +4,10 @@
 using namespace std;
 const int Max_num = 105;
 
-//单个商品结构体，包括id、名称、品牌、价格、数量
-struct item
+//单个商品类，包括id、名称、品牌、价格、数量
+class item
 {
+public:
 	int id;
 	string name;
 	string brand;
@@ -14,9 +15,10 @@ struct item
 	int amount;
 };
 
-//用户结构体，包括用户名称，用户密码，收货地址，用户购物车
-struct user
+//用户类，包括用户名称，用户密码，收货地址，用户购物车
+class user
 {
+public:
 	string name;
 	string password;
 	string address = "none";
@@ -24,9 +26,10 @@ struct user
 	int shopping_car_num = 0; //购物车中商品数量
 };
 
-//已售商品结构体，包括id、名称、品牌、价格、已售数量、购买用户
-struct sale_item
+//已售商品类，包括id、名称、品牌、价格、已售数量、购买用户
+class sale_item
 {
+public:
 	int id;
 	string name;
 	string brand;
@@ -48,9 +51,7 @@ public:
 	int item_num = 0; //当前库存商品种类数
 
 	user all_users[Max_num]; //用户列表，由用户结构体数组实现
-	int user_num = 0; //用户列表数量
-
-	
+	int user_num = 0; //用户列表数量	
 
 	Shopping();	//构造函数
 	void show();  //显示主界面

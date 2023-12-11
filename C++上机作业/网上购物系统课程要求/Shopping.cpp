@@ -6,12 +6,7 @@
 using namespace std;
 
 Shopping::Shopping()
-{
-	char all_items_address[20] = "库存.txt"; //库存文件地址
-	char sales_list_address[20] = "已售清单.txt"; //售货清单文件地址
-	char all_users_address[20] = "用户.txt"; //用户列表文件地址
-	char users_shopping_address[20] = "收货地址.txt"; //用户收货地址文件地址
-}
+{}
 
 
 //显示主界面	√
@@ -769,7 +764,7 @@ void Shopping::delete_shopping_car(int index, user* this_user)
 
 }
 
-//用户修改购物车商品数量
+//用户修改购物车商品数量	√
 void Shopping::change_shopping_car(int index, user* this_user)
 {
 	read_shopping_car(this_user); //读取该用户购物车
