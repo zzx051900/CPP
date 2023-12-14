@@ -5934,9 +5934,57 @@
   - 所以只能在.h文件中仅仅声明它：`float frequencies[5];`
   - 然后在对应的.cpp文件中对其进行初始化
 
-# 网上模拟购物系统暂存
+## 2.0xC00000FD:Stack overflow溢出分析
+
+- 报错原因：
+  - 设置c++程序的堆栈空间解决栈溢出问题。在我们自己定义结构体时，往往会包含很多数组，在创建包含大数组的类（或数据）时，栈就会发生溢出，从而在刚刚调试进入函数体中，就会报错Stack Overflow错误。往往是程序还没运行算法呢，就down掉了，这是由于系统分配给程序的栈空间太小。而此时把定义的结构体变量定成全局变量可以避免这个问题，但是终究不是解决问题的最好方法。
+- 解决方法：
+  - 方法1：修改vs系统分配栈的大小
+  - 方法2： 动态创建
+  - 方法3：如果不需要特别多数据，可以将数组大小设置小一些（只适合小项目）
+
+# 杂类
+
+## 1.求当前系统时间
 
 - ```c++
+  #define _CRT_SECURE_NO_WARNINGS
+  #include<iostream>
+  #include<string>
+  #include<ctime>
+  using namespace std;
+  
+  int main() 
+  {
+  	// 获取当前时间
+  	time_t t = time(0);
+  	tm* now = localtime(&t);
+  
+  	// 提取年月日
+  	int year = now->tm_year + 1900;   // 年份是从1900年开始的
+  	int month = now->tm_mon + 1;      // 月份范围是0-11
+  	int day = now->tm_mday;
+  
+  	string time = to_string(year) + "-" + to_string(month) + "-" + to_string(day);
+  
+  	cout << time << endl;
+  
+  	system("pause");
+  	return 0;
+  }
   ```
 
-- 
+## 2.C/C++中string和int相互转换的常用方法
+
+- 通过 `std::to_string() `函数转换
+
+  - ```c++
+    #include <iostream>
+    using namespace std;
+    int main()
+    {
+        int num = 123;
+        std::cout << to_string(num);
+        return 0;
+    }
+    ```
