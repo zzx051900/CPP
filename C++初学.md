@@ -5823,8 +5823,8 @@
 
 ### 2.函数模板
 
-- C++另一种编程思想称为 泛式编程，主要利用技术就是模板
-- C++提供两种模板机制：函数模板 和 类模板
+- C++另一种编程思想称为**泛式编程**，主要利用技术就是**模板**
+- C++提供两种模板机制：**函数模板** 和 **类模板**
 
 #### （1）函数模板语法
 
@@ -5848,6 +5848,73 @@
   - 函数模板利用关键字`template`
   - 使用函数模板有两种方式：自动类型推导、显示指定类型
   - 模板的目的是为了提高复用性，将类型参数化
+  
+- ```c++
+  #define _CRT_SECURE_NO_WARNINGS
+  #include<iostream>
+  #include<string>
+  using namespace std;
+  
+  //函数模板
+  template<typename T>	//声明一个模板，告诉编译器后面的T不要报错，T是一个通用数据类型
+  void mySwap(T &a, T &b)
+  {
+  	T temp = a;
+  	a = b;
+  	b = temp;
+  }
+  
+  //交换两个整型
+  void swapInt(int &a, int &b)
+  {
+  	int temp = a;
+  	a = b;
+  	b = temp;
+  }
+  
+  //交换两个浮点型数
+  void swapDouble(double &a, double &b)
+  {
+  	double temp = a;
+  	a = b;
+  	b = temp;
+  }
+  
+  void test01()
+  {
+  	int a = 10;
+  	int b = 20;
+  
+  	//swapInt(a, b);
+  	//下面使用函数模板交换，有两种方式
+  	//1.自动类型推导
+  	//mySwap(a, b);	//可以达到与函数swapInt一样的效果
+  	//2.显式指定类型
+  	mySwap<int>(a, b);
+  
+  	cout << "a = " << a << endl;
+  	cout << "b = " << b << endl;
+  
+  	double c = 0.5;
+  	double d = 2.5;
+  
+  	//swapDouble(c, d);
+  	//mySwap(c, d);
+  	mySwap<double>(c, d);
+  
+  	cout << "c = " << c << endl;
+  	cout << "d = " << d << endl;
+  
+  }
+  
+  int main() 
+  {
+  	test01();
+  
+  	system("pause");
+  	return 0;
+  }
+  ```
 
 #### （2）函数模板注意事项
 
@@ -5988,3 +6055,8 @@
         return 0;
     }
     ```
+
+## 3.修改默认堆栈大小
+
+- 可避免数组过大或递归过多导致栈溢出报错或程序崩溃的问题（不知道描述是否正常）
+- 项目 -> 属性 -> 链接器 -> 系统 -> 堆栈保留大小（默认为1MB = 1024*1024）将其修改更大
