@@ -1,4 +1,4 @@
-- 网课（黑马程序员）（共314节）：1，2，3，4，5，6，7，8，9，10，11，12，13，14，15，16，17，18，19，20，21，22，23，24，25，26，27，28，29，30，31，32，33，34，35，36，37，38，39，40，41，42，43，44，45，46，47，48，49，50，51，52，53，54，55，56，57，58，59，60，61，62，63，64，65，66，67，68，69，70，71，72，73，74，75，76，77，78，79，80，81，82，83，84，85，86，87，88，89，90，91，92，93，94，95，96，97，98，99，100，101，102，103，104，105，106，107，108，109，110，110，111，112，113，114，115，116，117，118，119，120，121，122，...，127，128，129，130，131，132，133，134，135，136，137，138，139，140，141，142，143，144，...，147，148，149，150，151，152，153，154，155，156，157，158，159，160，161，162，163，164，165，166，
+- 网课（黑马程序员）（共314节）：1，2，3，4，5，6，7，8，9，10，11，12，13，14，15，16，17，18，19，20，21，22，23，24，25，26，27，28，29，30，31，32，33，34，35，36，37，38，39，40，41，42，43，44，45，46，47，48，49，50，51，52，53，54，55，56，57，58，59，60，61，62，63，64，65，66，67，68，69，70，71，72，73，74，75，76，77，78，79，80，81，82，83，84，85，86，87，88，89，90，91，92，93，94，95，96，97，98，99，100，101，102，103，104，105，106，107，108，109，110，110，111，112，113，114，115，116，117，118，119，120，121，122，...，127，128，129，130，131，132，133，134，135，136，137，138，139，140，141，142，143，144，...，147，148，149，150，151，152，153，154，155，156，157，158，159，160，161，162，163，164，165，166，167，168，169，170，171，172，173，174，175
 - 课程安排：
   - 第一阶段：C++基础入门，对C++有初步了解
     - 案例：通讯录管理系统
@@ -699,7 +699,51 @@
 ### 8.指针、数组、函数
 
 - 案例描述：封装一个函数，利用冒泡排序，实现对整型数组的排序
+
 - 文件：[8.指针配合数组和函数案例-冒泡排序.cpp](https://github.com/zzx051900/C-/blob/a39f5c2707dd177f4d6719720c9eadf0d43ca457/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/8.%E6%8C%87%E9%92%88%E9%85%8D%E5%90%88%E6%95%B0%E7%BB%84%E5%92%8C%E5%87%BD%E6%95%B0%E6%A1%88%E4%BE%8B-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F.cpp)
+
+- 代码：
+
+  - ```c++
+    #include<iostream>
+    
+    using namespace std;
+    
+    void bubbleSort(int* arr, int sz)//冒泡排序，未优化，原始版本
+    {
+    	for (int i = 0; i < sz - 1; i++)//sz个元素，需要循环sz-1趟
+    	{
+    		for (int j = 0; j < sz - 1 - i; j++)//需要比较的数每次减少一个
+    		{
+    			if (arr[j]>arr[j + 1])
+    			{
+    				int temp = arr[j];
+    				arr[j] = arr[j + 1];
+    				arr[j + 1] = temp;
+    			}
+    		}
+    	}
+    }
+    
+    void printArray(int* arr, int sz)//遍历输出数组元素
+    {
+    	for (int i = 0; i < sz; i++)
+    		cout << arr[i] << " ";
+    	cout << endl;
+    }
+    
+    int main()
+    {
+    	int arr[] = { 5, 6, 9, 4, 3, 2, 8, 7, 1, 10 };
+    	int sz = sizeof(arr) / sizeof(arr[0]);//数组元素个数
+    	printArray(arr, sz);//输出排序前数组元素
+    	bubbleSort(arr, sz);
+    	printArray(arr, sz);//输出排序后数组元素
+    	system("pause");
+    	return 0;
+    }
+    ```
+
 
 ## （八）.结构体
 
@@ -5849,78 +5893,131 @@
   - 使用函数模板有两种方式：自动类型推导、显示指定类型
   - 模板的目的是为了提高复用性，将类型参数化
   
-- ```c++
-  #define _CRT_SECURE_NO_WARNINGS
-  #include<iostream>
-  #include<string>
-  using namespace std;
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //函数模板
+    template<typename T>	//声明一个模板，告诉编译器后面的T不要报错，T是一个通用数据类型
+    void mySwap(T &a, T &b)
+    {
+    	T temp = a;
+    	a = b;
+    	b = temp;
+    }
+    
+    //交换两个整型
+    void swapInt(int &a, int &b)
+    {
+    	int temp = a;
+    	a = b;
+    	b = temp;
+    }
+    
+    //交换两个浮点型数
+    void swapDouble(double &a, double &b)
+    {
+    	double temp = a;
+    	a = b;
+    	b = temp;
+    }
+    
+    void test01()
+    {
+    	int a = 10;
+    	int b = 20;
+    
+    	//swapInt(a, b);
+    	//下面使用函数模板交换，有两种方式
+    	//1.自动类型推导
+    	//mySwap(a, b);	//可以达到与函数swapInt一样的效果
+    	//2.显式指定类型
+    	mySwap<int>(a, b);
+    
+    	cout << "a = " << a << endl;
+    	cout << "b = " << b << endl;
+    
+    	double c = 0.5;
+    	double d = 2.5;
+    
+    	//swapDouble(c, d);
+    	//mySwap(c, d);
+    	mySwap<double>(c, d);
+    
+    	cout << "c = " << c << endl;
+    	cout << "d = " << d << endl;
+    
+    }
+    
+    int main() 
+    {
+    	test01();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
   
-  //函数模板
-  template<typename T>	//声明一个模板，告诉编译器后面的T不要报错，T是一个通用数据类型
-  void mySwap(T &a, T &b)
-  {
-  	T temp = a;
-  	a = b;
-  	b = temp;
-  }
-  
-  //交换两个整型
-  void swapInt(int &a, int &b)
-  {
-  	int temp = a;
-  	a = b;
-  	b = temp;
-  }
-  
-  //交换两个浮点型数
-  void swapDouble(double &a, double &b)
-  {
-  	double temp = a;
-  	a = b;
-  	b = temp;
-  }
-  
-  void test01()
-  {
-  	int a = 10;
-  	int b = 20;
-  
-  	//swapInt(a, b);
-  	//下面使用函数模板交换，有两种方式
-  	//1.自动类型推导
-  	//mySwap(a, b);	//可以达到与函数swapInt一样的效果
-  	//2.显式指定类型
-  	mySwap<int>(a, b);
-  
-  	cout << "a = " << a << endl;
-  	cout << "b = " << b << endl;
-  
-  	double c = 0.5;
-  	double d = 2.5;
-  
-  	//swapDouble(c, d);
-  	//mySwap(c, d);
-  	mySwap<double>(c, d);
-  
-  	cout << "c = " << c << endl;
-  	cout << "d = " << d << endl;
-  
-  }
-  
-  int main() 
-  {
-  	test01();
-  
-  	system("pause");
-  	return 0;
-  }
-  ```
 
 #### （2）函数模板注意事项
 
 - 注意事项：
   - 自动类型推导，必须推导出一致的数据类型 T，才可以使用
   - 模板必须要确定出 T 的数据类型，才可以使用
+  
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //函数模板注意事项
+    template<class T>	//typename可以替换称为class
+    void mySwap(T &a, T &b)
+    {
+    	T temp = a;
+    	a = b;
+    	b = temp;
+    }
+    
+    //1.自动类型推导，必须推导出一致的数据类型 T，才可以使用
+    void test01()
+    {
+    	int a = 10;
+    	int b = 20;
+    	char c = 'c';
+    	//mySwap(a, b);	//正确
+    	//mySwap(a, c);	//错误
+    	cout << "a = " << a << endl;
+    	cout << "b = " << b << endl;
+    }
+    //2.模板必须要确定出 T 的数据类型，才可以使用
+    template<class T>	
+    void func()
+    {
+    	cout << "func调用" << endl;
+    }
+    
+    void test02()
+    {
+    	//func();	//报错
+    }
+    
+    int main() 
+    {
+    	test01();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
 - 总结：
   - 使用模板时必须确定出通用数据类型T，并且能够推导出一致的类型
 
@@ -5930,6 +6027,77 @@
   - 利用函数模板封装一个排序的函数，可以对不同的数据类型数组类型排序
   - 排序规则从大到小，排序算法为选择排序
   - 分别利用`char`数组和`int` 数组进行测试
+  
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //从大到小
+    template<class T>
+    void mySort(T arr[], int len)
+    {
+    	for (int i = 0; i < len; i++)
+    	{
+    		int max = i;	//默认当前未排序部分的第一个为最大值
+    		for (int j = i; j < len; j++)
+    		{
+    			if (arr[j] > arr[max])
+    			{
+    				max = j;
+    			}
+    		}	//一轮循环可找到未排序部分的最大值
+    		if(max != i)
+    		{
+    			T temp = arr[i];
+    			arr[i] = arr[max];
+    			arr[max] = temp;
+    		}
+    	}
+    }
+    
+    //打印数组模板
+    template<class T>
+    void printArray(T arr[], int len)
+    {
+    	for (int i = 0; i < len; i++)
+    	{
+    		cout << arr[i] << " ";
+    	}
+    	cout << endl;
+    }
+    
+    void test01()
+    {
+    	//测试char数组
+    	char arr[] = "dcbafegijkh";
+    	int num = sizeof(arr) / sizeof(char);
+    	mySort(arr, num);
+    	printArray(arr, num);
+    }
+    
+    void test02()
+    {
+    	//测试int数组
+    	int arr[] = { 0, 8, 7, 6, 5, 3, 4, 2, 10 };
+    	int num = sizeof(arr) / sizeof(int);
+    	mySort(arr, num);
+    	printArray(arr, num);
+    }
+    
+    int main() 
+    {
+    	test01();
+    	test02();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
 
 #### （4）普通函数和函数模板的区别
 
@@ -5937,10 +6105,796 @@
   - 普通函数调用时可以发生自动类型转换（隐式类型转换）
   - 函数模板调用时，如果利用自动类型推导，不会发生隐式类型转换
   - 如果显示指定类型的方式，可以发生隐式类型转换
+  
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //普通函数
+    int myAdd01(int a, int b)
+    {
+    	return a + b;
+    }
+    
+    template<typename T>
+    T myAdd02(T a, T b)
+    {
+    	return a + b;
+    }
+    
+    void test01()
+    {
+    	int a = 10;
+    	int b = 20;
+    	char c = 'c';
+    	//调用普通函数
+    	cout << myAdd01(a, b) << endl;
+    	cout << myAdd01(a, c) << endl;	//可以运行，发生隐式类型转换，c转化成它对应的ASCII码
+    
+    	///调用模板函数
+    	cout << myAdd02(a, b) << endl;
+    	//cout << myAdd02(a, c) << endl;	//报错，函数模板调用时，如果利用自动类型推导，不会发生隐式类型转换
+    	cout << myAdd02<int>(a, c) << endl;	//可以运行，如果显示指定类型的方式，可以发生隐式类型转换，指定int后，可以发生隐式类型转换
+    }
+    
+    int main() 
+    {
+    	test01();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
 - 总结：
   - 建议使用显示指定类型的方法，调用函数模板，因为可以自己确定通用类型
 
+#### （5）普通函数和函数模板的调用规则
+
+- 调用规则：
+
+  1. 如果函数模板和普通函数都可以实现，则优先调用普通函数
+  2. 可以通过空模板参数列表来强制调用函数模板
+  3. 函数模板也可以发生重载
+  4. 如果函数模板可以产生更多的匹配，优先调用函数模板
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //普通函数和函数模板的调用规则
+    //1. 如果函数模板和普通函数都可以实现，则优先调用普通函数
+    //2. 可以通过空模板参数列表来强制调用函数模板
+    //3. 函数模板也可以发生重载
+    //4. 如果函数模板可以产生更多的匹配，优先调用函数模板
+    
+    void myPrint(int a, int b)
+    {
+    	cout << "调用普通函数" << endl;
+    }
+    
+    template<class T>
+    void myPrint(T a, T b)
+    {
+    	cout << "调用模板" << endl;
+    }
+    
+    template<class T>
+    void myPrint(T a, T b, T c)
+    {
+    	cout << "调用重载模板" << endl;
+    }
+    
+    void test01()
+    {
+    	int a = 10;
+    	int b = 20;
+    	//myPrint(a, b);	//如果函数模板和普通函数都可以实现，则优先调用普通函数
+    
+    	
+    	myPrint<>(a, b);	//可以通过空模板参数列表来强制调用函数模板
+    	int c = 30;
+    	myPrint(a, b, c);	//函数模板也可以发生重载
+    
+    	char c1 = 'a';
+    	char c2 = 'b';
+    	myPrint(c1, c2);	//如果函数模板可以产生更多的匹配，优先调用函数模板
+    }
+    
+    
+    
+    int main() 
+    {
+    	test01();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+- 总结：
+
+  - 如果提供了函数模板，最好就不要再提供普通函数，否则容易出现二义性
+
+#### （6）模板的局限性
+
+- 局限性：	
+
+  - 模板的通用性并不是万能的
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //模板的局限性
+    
+    class Person
+    {
+    public:
+    	Person(string name, int age)
+    	{
+    		this->m_Name = name;
+    		this->m_Age = age;
+    	}
+    
+    	string m_Name;
+    	int m_Age;
+    };
+    
+    template<class T>
+    bool myCompare(T &a, T &b)
+    {
+    	if(a == b)
+    	{
+    		return true;
+    	}
+    	return false;
+    }
+    
+    //利用具体化Person的版本实现代码，具体化优先使用
+    template<> bool myCompare(Person &p1, Person &p2)
+    {
+    	if (p1.m_Name == p2.m_Name && p1.m_Age == p2.m_Age)
+    	{
+    		return true;
+    	}
+    	return false;
+    }
+    
+    void test01()
+    {
+    	int a = 10;
+    	int b = 20;
+    	bool result = myCompare(a, b);
+    	if (result)
+    	{
+    		cout << "a == b" << endl;
+    	}
+    	else
+    	{
+    		cout << "a != b" << endl;
+    	}
+    }
+    
+    void test02()	//未具体化时会报错
+    {
+    	Person p1("Tom", 10);
+    	Person p2("Tom", 10);
+    
+    	bool result = myCompare(p1, p2);
+    	if (result)
+    	{
+    		cout << "p1 == p2" << endl;
+    	}
+    	else
+    	{
+    		cout << "p1 != p2" << endl;
+    	}
+    }
+    
+    int main() 
+    {
+    	test01();
+    	test02();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+- 总结：
+
+  - 利用具体化的模板，可以解决自定义类型的通用化
+  - 学习模板并不是为了写模板，而是再STL能够运用系统提供的模板
+
 ### 3.类模板
+
+#### （1）类模板语法
+
+- 类模板作用：
+  - 建立一个通用类：类中的成员数据类型可以不具体制定，用一个虚拟的类型来代表
+
+- 语法：
+  - ```c++
+    template<typename T>
+    类
+    ```
+
+- 解释：
+
+  - template  ---  声明创建模板
+  - typename  ---  表明其后面的符号是一种数据类型，可以用`class`代替
+  - T  ---  通用数据类型，名称可以替换，通常为大写字母
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //类模板
+    template<class NameType,class AgeType>
+    class Person
+    {
+    public:
+    	Person(NameType name, AgeType age)
+    	{
+    		this->m_Name = name;
+    		this->m_Age = age;
+    	}
+    
+    	void showPerson()
+    	{
+    		cout << "name:" << this->m_Name << endl;
+    		cout << "age:" << this->m_Age << endl;
+    	}
+    
+    	NameType m_Name;
+    	AgeType m_Age;
+    };
+    
+    void test01()
+    {
+    	Person<string, int> p1("aaa", 100);
+    	p1.showPerson();
+    }
+    
+    int main() 
+    {
+    	test01();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+- 总结：
+
+  - 类模板与函数模板语法类似，在声明模板template后面加类，此类称为类模板
+
+#### （2）类模板与函数模板区别
+
+- 类模板和函数模板区别主要有两点：
+
+  - 类模板没有自动类型推导的使用方式
+  - 类模板在模板参数列表中可以有默认参数
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //类模板和函数模板的区别:
+    //1. 类模板没有自动类型推导的使用方式
+    //2. 类模板在模板参数列表中可以有默认参数
+    template<class NameType,class AgeType = int>
+    class Person
+    {
+    public:
+    	Person(NameType name, AgeType age)
+    	{
+    		this->m_Name = name;
+    		this->m_Age = age;
+    	}
+    
+    	void showPerson()
+    	{
+    		cout << "name:" << this->m_Name << endl;
+    		cout << "age:" << this->m_Age << endl;
+    	}
+    
+    	NameType m_Name;
+    	AgeType m_Age;
+    };
+    
+    void test01()
+    {
+    	//Person p1("aaa", 100);	//报错，类模板没有自动类型推导的使用方式
+    	Person<string, int> p1("aaa", 100);	//正确，必须使用显示指定类型
+    	p1.showPerson();
+    }
+    
+    void test02()
+    {
+    	Person<string> p2("bbb", 200);	//类模板在模板参数列表中可以有默认参数，默认AgeType类型为int,实例化时就可以省略
+    	p2.showPerson();
+    }
+    
+    int main() 
+    {
+    	test01();
+    	test02();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+#### （3）类模板中成员函数的创建时机
+
+- 类模板中成员函数与普通类中成员函数创建时机是有区别的：
+
+  - 普通类中的成员函数一开始就可以创建
+  - 类模板中的成员函数在调用时才创建
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    class Person1
+    {
+    public:
+    
+    	void showPerson1()
+    	{
+    		cout << "Person1 show" << endl;
+    	}
+    };
+    
+    class Person2
+    {
+    public:
+    
+    	void showPerson2()
+    	{
+    		cout << "Person2 show" << endl;
+    	}
+    };
+    
+    template<class T>
+    class MyClass
+    {
+    public:
+    	T obj;
+    
+    	void func1()
+    	{
+    		obj.showPerson1();
+    	}
+    
+    	void func2()
+    	{
+    		obj.showPerson2();
+    	}
+    };
+    
+    void test01()
+    {
+    	MyClass<Person1> m;
+    	m.func1();
+    	//m.func2();	//报错
+    	MyClass<Person2> n;
+    	n.func2();
+    }
+    
+    int main() 
+    {
+    	test01();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+#### （4）类模板对象作函数参数
+
+- 学习目标：类模板实例化出的对象，向函数传参的方式
+
+- 一共有三种传入方式：
+
+  1. 指定传入的类型（最常用）  --- 直接显示对象的数据类型
+  2. 参数模板化  --- 将对象中的参数变为模板进行传递
+  3. 整个类模板化  --- 将这个对象类型模板化进行传递
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //类模板对象作函数参数
+    //1. 指定传入的类型  --- 直接显示对象的数据类型
+    //2. 参数模板化  --- 将对象中的参数变为模板进行传递
+    //3. 整个类模板化  --- 将这个对象类型模板化进行传递
+    
+    template<class T1,class T2>
+    class Person
+    {
+    public:
+    	Person(T1 name, T2 age)
+    	{
+    		this->m_Name = name;
+    		this->m_Age = age;
+    	}
+    
+    	void showPerson()
+    	{
+    		cout << "姓名：" << this->m_Name << " 年龄：" << this->m_Age << endl;
+    	}
+    
+    	T1 m_Name;
+    	T2 m_Age;
+    };
+    
+    //1. 指定传入的类型  --- 直接显示对象的数据类型
+    void printPerson1(Person<string, int> &p)
+    {
+    	p.showPerson();
+    }
+    
+    void test01()
+    {
+    	Person<string, int> p("aaa", 100);
+    	printPerson1(p);
+    }
+    
+    //2. 参数模板化  --- 将对象中的参数变为模板进行传递
+    template<class T1,class T2>
+    void printPerson2(Person<T1,T2> &p)
+    {
+    	p.showPerson();
+    	cout << "T1的类型：" << typeid(T1).name() << endl;
+    	cout << "T2的类型：" << typeid(T2).name() << endl;
+    }
+    
+    void test02()
+    {
+    	Person<string, int> p("bbb", 200);
+    	printPerson2(p);
+    }
+    
+    //3. 整个类模板化  --- 将这个对象类型模板化进行传递
+    template<class T>
+    void printPerson3(T &p)
+    {
+    	p.showPerson();
+    	cout << "T的类型：" << typeid(T).name() << endl;
+    }
+    
+    void test03()
+    {
+    	Person<string, int> p("ccc", 300);
+    	printPerson3(p);
+    }
+    
+    int main() 
+    {
+    	test01();
+    	test02();
+    	test03();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+#### （5）类模板与继承
+
+- 当类模板要继承时，需要注意以下几点：
+
+  - 当子类继承的父类是一个类模板时，子类在声明时，要指出父类中T的类型
+  - 如果不指定，编译器无法给子类分配内存
+  - 如果想灵活制定出父类中T的类型，子类也需要变为类模板
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //类模板与继承
+    
+    template<class T>
+    class Base
+    {
+    	T m;
+    };
+    
+    class Son :public Base<int>	//必须要知道父类中的T类型，才能继承给子类
+    {
+    
+    };
+    
+    //如果想灵活制定出父类中T的类型，子类也需要变为类模板
+    template<class T1, class T2>
+    class Son2 :public Base<T2>
+    {
+    public:
+    	Son2()
+    	{
+    		cout << "T1的类型：" << typeid(T1).name() << endl;
+    		cout << "T2的类型：" << typeid(T2).name() << endl;
+    	}
+    
+    	T1 obj;
+    };
+    
+    void test01()
+    {
+    	Son S1;
+    }
+    
+    void test02()
+    {
+    	Son2<int, char> S2;
+    }
+    
+    int main() 
+    {
+    	test02();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+#### （6）类模板成员函数类外实现
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //类模板成员函数类外实现
+    template<class T1,class T2>
+    class Person
+    {
+    public:
+    	Person(T1 name, T2 age);
+    	/*{
+    		this->m_Name = name;
+    		this->m_Age = age;
+    	}*/
+    	void shouPerson();
+    	/*{
+    		cout << "姓名：" << this->m_Name << " 年龄：" << this->m_Age << endl;
+    	}*/
+    
+    	T1 m_Name;
+    	T2 m_Age;
+    };
+    
+    //构造函数类外实现
+    template<class T1, class T2>
+    Person<T1, T2>::Person(T1 name, T2 age)
+    {
+    this->m_Name = name;
+    this->m_Age = age;
+    }
+    
+    //成员函数类外实现
+    template<class T1, class T2>
+    void Person<T1, T2>::shouPerson()
+    {
+    cout << "姓名：" << this->m_Name << " 年龄：" << this->m_Age << endl;
+    }
+    
+    void test01()
+    {
+    	Person<string, int> p1("aaa", 100);
+    	p1.shouPerson();
+    }
+    
+    int main() 
+    {
+    	test01();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+- 总结：
+
+  - 类模板中成员函数类外实现时，需要加上模板参数列表
+
+#### （7）类模板分文件编写
+
+- 学习目标：
+
+  - 掌握类模板成员函数分文件编写产生的问题以及解决方式
+
+- 问题：
+
+  - 类模板中成员函数创建时机是在调用阶段，导致分文件编写时链接不到
+
+- 解决：
+
+  - 解决方法1：直接包含.cpp文件（不常用）
+
+    - 将类的声明放在 .h 文件中，将成员函数实现放在 .cpp 文件中，正常是包含 .h 文件，但这里必须直接包含 .cpp 文件
+
+  - 解决方式2：（常用）
+
+    - 将声明和实现写到同一个文件中，并更改后缀名为.hpp，hpp是一般约定名称，不是强制
+
+    - .hpp 文件：
+
+      - ```c++
+        #define _CRT_SECURE_NO_WARNINGS
+        #include<iostream>
+        #include<string>
+        using namespace std;
+        
+        template<class T1, class T2>
+        class Person
+        {
+        public:
+        	Person(T1 name, T2 age);
+        	
+        	void shouPerson();
+        	
+        	T1 m_Name;
+        	T2 m_Age;
+        };
+        
+        template<class T1, class T2>
+        Person<T1, T2>::Person(T1 name, T2 age)
+        {
+        	this->m_Name = name;
+        	this->m_Age = age;
+        }
+        
+        template<class T1, class T2>
+        void Person<T1, T2>::shouPerson()
+        {
+        	cout << "姓名：" << this->m_Name << " 年龄：" << this->m_Age << endl;
+        }
+        ```
+
+#### （8）类模板与友元
+
+- 学习目标：
+
+  - 掌握类模板配合友元函数的类内和类外实现
+
+- 全局函数类内实现：直接在类内声明友元即可
+
+- 全局函数类外实现：需要提前让编译器知道全局函数的存在
+
+- 示例：
+
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    //通过全局函数打印Person信息
+    
+    //提前让编译器知道Person类存在
+    template<class T1, class T2>
+    class Person;
+    
+    template<class T1, class T2>
+    void printPerson2(Person<T1, T2> p)
+    {
+    	cout << "类外实现---姓名：" << p.m_Name << " 类外实现---年龄：" << p.m_Age << endl;
+    }
+    
+    template<class T1, class T2>
+    class Person
+    {
+    	//全局函数 类内实现（？？？）
+    	friend void printPerson(Person<T1,T2> p)
+    	{
+    		cout << "姓名：" << p.m_Name << " 年龄：" << p.m_Age << endl;
+    	}
+    
+    	//全局函数 类外实现（？？？）
+    	//加空模板参数列表
+    	//如果全局函数是类外实现，需要让编译器提前知道这个函数存在
+    	friend void printPerson2<>(Person<T1, T2> p);
+    
+    public:
+    	Person(T1 name, T2 age)
+    	{
+    		this->m_Name = name;
+    		this->m_Age = age;
+    	}
+    
+    	void shouPerson();
+    private:
+    	T1 m_Name;
+    	T2 m_Age;
+    };
+    
+    //全局函数类内实现测试
+    void test01()
+    {
+    	Person<string, int> p("aaa", 10);
+    	printPerson(p);
+    }
+    
+    //全局函数类外实现测试
+    void test02()
+    {
+    	Person<string, int> p2("bbb", 20);
+    	printPerson2(p2);
+    }
+    
+    int main() 
+    {
+    	test01();
+    	test02();
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+- 总结：
+
+  - 建议使用类内实现
+
+#### （9）类模板案例
+
+- 案例描述：实现一个通用的数组类，要求如下：
+
+  - 可以对内置数据类型以及自定义数据类型的数据进行存储
+  - 将数组中的数据存储到堆区
+  - 构造函数中可以传入数组的容量
+  - 提供对应的拷贝构造函数以及operator=防止浅拷贝问题
+  - 提供尾插法和尾删法对数组中的数据进行增加和删除
+  - 可以通过下标的方式访问数组中的元素
+  - 可以获取数组中当前元素个数和容量
+
+- 代码：
+
+  - ```c++
+    
+    
+    ```
+
+  - 
 
 ## （二）STL初识
 
