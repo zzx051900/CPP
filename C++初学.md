@@ -26,6 +26,7 @@
   int main()
   {
   	cout << "hello world" << endl;
+      
   	system("pause");
   	return 0;
   }
@@ -47,12 +48,12 @@
     */
     ```
 
-### 3.变量
+### 3.变量`(variables)`
 
 - 变量的作用：给一段指定的空间起名，方便操作这段内存
 - 语法：`数据类型 变量名 = 初始值;`
 
-### 4.常量
+### 4.常量`(constants)`
 
 - 作用：用于记录程序中不可更改的数据
 
@@ -66,7 +67,7 @@
 
 - 再给变量或常量起名时，不得使用C++关键字
 
-### 6.标识符命名规则
+### 6.标识符`(identifier)`命名规则
 
 - 标识符不能是关键字
 - 标识符只能由字母、数字、下划线组成
@@ -118,7 +119,7 @@
   - 非打印字符：**0~31**分配给了控制字符，用于控制打印机等外围设备
   - 打印字符：**32~126**分配给了能在键盘上找到的字符，当查看或打印文档时会出现
 
-### 5.转移字符
+### 5.转义字符
 
 - 作用：用于表示一些不能显示出来的字符
 - 常用：
@@ -143,7 +144,7 @@
   - 两个字符串相等时返回0
   - 两个字符串不相等时：
     - 若s1长度长，则返回1
-    - 若s1长度短，则返回1
+    - 若s1长度短，则返回-1
 
 - 也可以直接使用`==`号进行比较
 
@@ -182,7 +183,7 @@
   - `bool flag = true`
 - 布尔类型，非0都是真
 
-### 8.数据的输入
+### 8.数据的输入输出
 
 - 作用：用于从键盘获取数据
 
@@ -237,7 +238,7 @@
        cout << "布尔类型flag = " << flag << endl;
        ```
 
-## （三）.运算符
+## （三）.运算符`(operators)`
 
 ### 1.算术运算符
 
@@ -248,8 +249,8 @@
   - 除数不能为0
   - 两个整数相除仍然是整数
 - %
-  - 除数不能为0，也不能取模
-  - 两个小数不能作取值运算
+  - 除数不能为0，0也不能取模
+  - 两个小数不能作取模运算
   - 只有整型变量可以作取模运算
 - ++a
 - a++
@@ -272,7 +273,7 @@
 
 - <
 
-- >
+- `>`
 
 - <=
 
@@ -402,6 +403,50 @@
 - while循环练习案例：猜数字
 
   - 文件：[02.循环练习案例：猜数字.cpp](https://github.com/zzx051900/C-/blob/a6acf6b607c39e605b74af9503e11088bb27613e/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/2.%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84%E6%A1%88%E4%BE%8B-%E7%8C%9C%E6%95%B0%E5%AD%97.cpp)
+  
+  - 代码：
+  
+    - ```c++
+      #include<iostream>
+      #include<ctime>//time系统时间的头文件
+      using namespace std;
+      
+      int main()
+      {
+      	//添加随机数种子，利用当前系统时间生成随机数，防止每次随机数都一样
+      	srand((unsigned int)time(NULL));
+      
+      	//系统生成随机数(伪随机数）
+      	int num = rand() % 100 + 1;	//rand()%100，生成0~99的随机数
+      	//cout << num << endl;
+      
+      	int val = 0;
+      
+      	while (1)
+      	{
+      		//玩家进行猜测
+      		cin >> val;
+      
+      		//判断玩家猜测
+      		if (val > num)
+      		{
+      			cout << "猜测过大" << endl;
+      		}
+      		else if (val < num)
+      		{
+      			cout << "猜测过小" << endl;
+      		}
+      		else
+      		{
+      			cout << "恭喜您猜对了" << endl;
+      			break;
+      		}
+      	}
+      
+      	system("pause");
+      	return 0;
+      }
+      ```
 
 #### （2）do...while循环语句
 
@@ -418,6 +463,44 @@
 
 - 文件：[3.循环结构案例-水仙花数.cpp](https://github.com/zzx051900/C-/blob/a6acf6b607c39e605b74af9503e11088bb27613e/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/3.%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84%E6%A1%88%E4%BE%8B-%E6%B0%B4%E4%BB%99%E8%8A%B1%E6%95%B0.cpp)
 
+- 代码：
+
+  - ```c++
+    /*
+    案例描述：水仙花数是指一个3位数，它的每个位上的数字的3次幂之和等于它本身
+    例如：1^3+5^3+3^3=153
+    使用do...while语句，求出所有3位数中的水仙花数
+    */
+    #include<iostream>
+    
+    using namespace std;
+    
+    int main()
+    {
+    	int m = 100;//3位数，从100开始
+    
+    	int a = 0;//获取百位数字
+    	int b = 0;//获取十位数字
+    	int c = 0;//获取个位数字
+    
+    	do
+    	{
+    		a = m / 100;
+    		b = m / 10 % 10;
+    		c = m % 10;
+    		if (a*a*a + b*b*b + c*c*c == m)
+    		{
+    			cout << m << endl;
+    		}
+    		m++;
+    	} while (m < 1000);
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
+
 #### （3）for循环
 
 - 语法：
@@ -431,11 +514,42 @@
   
 - 文件：[4.循环结构案例-敲桌子.cpp](https://github.com/zzx051900/C-/blob/a6acf6b607c39e605b74af9503e11088bb27613e/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/4.%E5%BE%AA%E7%8E%AF%E6%A1%88%E4%BE%8B-%E6%95%B2%E6%A1%8C%E5%AD%90.cpp)
 
+  - ```c++
+    /*
+    案例描述：
+    从1开始数到数字100，如果数字中含有7，或该数字是7的倍数，
+    我们打印敲桌子，其余数字直接打印输出
+    */
+    #include<iostream>
+    
+    using namespace std;
+    
+    int main()
+    {
+    
+    	for (int i = 1; i <= 100; i++)
+    	{
+    		//个位是7（i % 10 == 7）    
+    		//十位是7（i / 10 == 7）
+    		//7的倍数（i % 7 == 0）
+    		if (i % 10 == 7 || i / 10 == 7 || i % 7 == 0)
+    		{
+    			cout << i << " 敲桌子" << endl;
+    		}
+    		else
+    		{
+    			cout << i << endl;
+    		}
+    	}
+    	system("pause");
+    	return 0;
+    }
+    ```
 
 
 #### （4）嵌套循环
 
-- 再循环里再嵌套一层循环
+- 在循环里再嵌套一层循环
 
 ### 3.跳转语句
 
@@ -458,7 +572,7 @@
   - `goto 标记;`    
   - `标记：`
 
-## （五）.数组
+## （五）.数组`(arrays)`
 
 ### 1.一维数组
 
@@ -467,18 +581,15 @@
 - 三种方式：
 
   1. `数据类型 数组名[数组长度];`
-
-     - 全局数组，未初始化时，默认值都是 0
-
-     - 局部数组，未初始化时，默认值为随机的不确定的值（-858993460）
-
-  2. `数据类型 数组名[数组长度] = {值1,值2,...};`
-
+   - 全局数组，未初始化时，默认值都是 0
+     
+   - 局部数组，未初始化时，默认值为随机的不确定的值（-858993460）
+     
+2. `数据类型 数组名[数组长度] = {值1,值2,...};`
      - 如果在数组初始化数据时，没有全部填写完，会用0来填补数据
-
+   
   3. `数据类型 数组名[] = {值1,值2,...};`
-
-     - 这种定义方式必须有初始长度
+- 这种定义方式必须有初始长度
 
 #### （2）一维数组的数组名
 
@@ -494,7 +605,69 @@
 #### （3）一维数组案例
 
 1. 文件：[5.一维数组案例-寻找最大值.cpp](https://github.com/zzx051900/C-/blob/a39f5c2707dd177f4d6719720c9eadf0d43ca457/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/5.%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E6%A1%88%E4%BE%8B-%E5%AF%BB%E6%89%BE%E6%9C%80%E5%A4%A7%E5%80%BC.cpp)
+
+   - 代码：
+
+     - ```c++
+       //一维数组案例：寻找最大值
+       #include<iostream>
+       using namespace std;
+       
+       int main()
+       {
+       	//1.创建数组
+       	int arr[5] = { 50, 40, 60, 70, 90 };
+       	//2.寻找最大值
+       	int max = 0;//存放最大值
+       	for (int i = 0; i < 5; i++)
+       	{
+       		if (arr[i]>max)
+       			max = arr[i];//如果访问的元素比我认定的元素大，则更新最大值
+       	}
+       	//3.输出最大值
+       	cout << "最大值为：" << max << endl;
+       	system("pause");
+       	return 0;
+       }
+       ```
+
 2. 文件：[6.一维数组案例-数组元素逆置.cpp](https://github.com/zzx051900/C-/blob/a39f5c2707dd177f4d6719720c9eadf0d43ca457/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/6.%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E6%A1%88%E4%BE%8B-%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E9%80%86%E7%BD%AE.cpp)
+
+   - 代码：
+
+     - ```c++
+       //一维数组案例：数组元素逆置
+       //案例描述：请声明一个5个元素的数组，并且将元素逆置
+       #include<iostream>
+       
+       using namespace std;
+       
+       int main()
+       {
+       	int arr[5] = { 9, 3, 7, 2, 8 };
+       	int temp = 0;//用于交换时暂时存放元素
+       
+       	for (int i = 0; i < 5; i++)
+       	{
+       		cout << arr[i] << " ";
+       	}
+       	cout << endl;
+       
+       	for (int i = 0; i < 5 / 2; i++)//i小于数组元素个数的一半
+       	{
+       		temp = arr[i];
+       		arr[i] = arr[4 - i];
+       		arr[4 - i] = temp;
+       	}
+       
+       	for (int i = 0; i < 5; i++)
+       	{
+       		cout << arr[i] << " ";
+       	}
+       	system("pause");
+       	return 0;
+       }
+       ```
 
 #### （4）冒泡排序（升序）
 
@@ -502,7 +675,52 @@
   1. 比较相邻的元素，如果第一个比第二个大，就交换它们两个
   2. 对每一对相邻元素做相同工作，执行完毕后，找到第一个最大值
   3. 重复以上步骤，由于每次执行一轮会将目前最大值放在最后，所以每次执行次数减一，直到不需要比较
+  
 - 文件：[7.冒泡排序.cpp](https://github.com/zzx051900/C-/blob/a39f5c2707dd177f4d6719720c9eadf0d43ca457/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/7.%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F.cpp)
+
+- 代码：
+
+  - ```c++
+    //冒泡排序（升序）
+    #include<iostream>
+    using namespace std;
+    
+    int main()
+    {
+    	int arr[] = { 2, 4, 3, 5, 6, 8, 9, 7, 1, 10 };
+    	int sz = sizeof(arr) / sizeof(arr[0]);
+    	//排序前输出
+    	for (int i = 0; i<sz; i++)
+    	{
+    		cout << arr[i] << " ";
+    	}
+    	cout << endl;
+    	int i = 0;//用于外层循环，表示趟数
+    	int j = 0;//用于内层循环，表示第几个数
+    	int tmp = 0;//用于交换元素
+    	for (i = 0; i<sz - 1; i++)//n个元素需要n—1次循环，，每一趟将一个元素交换到它应该在的最终位置
+    	{
+    		for (j = 0; j<sz - 1 - i; j++)//每趟循环都要从头开始，都要将j置0
+    		{
+    			if (arr[j]>arr[j + 1])
+    			{
+    				tmp = arr[j];
+    				arr[j] = arr[j + 1];
+    				arr[j + 1] = tmp;
+    			}
+    		}
+    	}
+    	//排序后输出.
+    
+    	for (int i = 0; i<sz; i++)
+    	{
+    		cout << arr[i] << " ";
+    	}
+    	system("pause");
+    	return 0;
+    }
+    ```
+
 
 ### 2.二维数组
 
@@ -525,7 +743,7 @@
     - `sizeof(arr)/sizeof(arr[0][0]);//数组中元素个数`
   - 查看二维数组首地址
 
-## （六）.函数
+## （六）.函数`(functions)`
 
 ### 1.函数的作用
 
@@ -583,7 +801,7 @@
   3. 在头文件中写函数的声明
   4. 在源文件中写函数的定义
 
-## （七）.指针
+## （七）.指针`(pointers)`
 
 ### 1.指针的作用
 
@@ -653,48 +871,64 @@
 
 - 利用指针访问数组元素
 
-- ```c++
-  int arr[] = {1,2,3,4,5,6,7,8,9,10};
-  int *p = arr;
-  cout << *p << endl;//输出数组第一个元素1
-  p++;//指针向后偏移4个字节
-  cout << *p << endl;//输出数组第二个元素2
-  //遍历输出
-  *p = arr;
-  int sz = sizeof(arr)/sizeof(arr[0]);
-  while(sz)
-  {
-      cout << *p <<endl;
-      p++;
-      sz--;
-  }
-  ```
+  - ```c++
+    int arr[] = {1,2,3,4,5,6,7,8,9,10};
+    int *p = arr;
+    cout << *p << endl;//输出数组第一个元素1
+    p++;//指针向后偏移4个字节
+    cout << *p << endl;//输出数组第二个元素2
+    //遍历输出
+    p = arr;
+    int sz = sizeof(arr)/sizeof(arr[0]);
+    while(sz)
+    {
+        cout << *p <<endl;
+        p++;
+        sz--;
+    }
+    ```
+
+- 字符数组字符串的字面值可以赋值给`char*`指针，但不可以修改其中的任何元素，因为该指针指向的是一个`const`字符数组
+
+  - ```c++
+    char arr[] = "hello world";
+    cout << arr << endl;
+    arr[0] = 'a';
+    cout << arr << endl;
+    
+    char* p = "hello world";
+    cout << *p << endl;	//输出数组第一个元素
+    p[0] = 'h';	//非法操作
+    //cout << *p << endl;	//无法正常输出
+    ```
+
 
 ### 7.指针和函数
 
 - 作用：利用指针作函数参数，可以修改实参的值
 
-- ```c++
-  void swap(int* p1, int* p2)
-      //这里的int* p1是表明p1是一个指针，也可写成int *p1，但这里的*p1不是解引用的意思，仅仅还是表明p1是一个指针
-  {
-  	int temp = 0;
-  	temp = *p1;
-  	*p1 = *p2;
-  	*p2 = temp;
-  }
-  int main()
-  {
-  	int a = 10, b = 20;
-  	cout << "a=" << a << endl;
-  	cout << "b=" << b << endl;
-  	swap(&a, &b);
-  	cout << "a=" << a << endl;
-  	cout << "b=" << b << endl;
-  	system("pause");
-  	return 0;
-  }
-  ```
+  - ```c++
+    void swap(int* p1, int* p2)
+        //这里的int* p1是表明p1是一个指针，也可写成int *p1，但这里的*p1不是解引用的意思，仅仅还是表明p1是一个指针
+    {
+    	int temp = 0;
+    	temp = *p1;
+    	*p1 = *p2;
+    	*p2 = temp;
+    }
+    int main()
+    {
+    	int a = 10, b = 20;
+    	cout << "a=" << a << endl;
+    	cout << "b=" << b << endl;
+    	swap(&a, &b);
+    	cout << "a=" << a << endl;
+    	cout << "b=" << b << endl;
+    	system("pause");
+    	return 0;
+    }
+    ```
+
 
 ### 8.指针、数组、函数
 
@@ -797,9 +1031,8 @@
   	system("pause");
   	return 0;
   }
-  
   ```
-
+  
 - 注意：
 
   - 创建结构体变量的时候，关键字struct可以省略
@@ -978,15 +1211,249 @@
     - 学生的成员有姓名、考试分数
     - 创建数组存放3名老师，通过函数给每个老师及所带学生赋值
     - 最终打印出老师数据以及老师所带学生的数据
+    
   - 文件：
     - [9.1结构体案例1（视频讲解版）.cpp](https://github.com/zzx051900/C-/blob/a39f5c2707dd177f4d6719720c9eadf0d43ca457/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/9.1%E7%BB%93%E6%9E%84%E4%BD%93%E6%A1%88%E4%BE%8B1%EF%BC%88%E8%A7%86%E9%A2%91%E8%AE%B2%E8%A7%A3%E7%89%88%EF%BC%89.cpp)
+    
+      - 代码：
+    
+        - ```c++
+          /*
+          案例描述：学校正在做毕设项目，每名老师带领5个学生，总共有3名老师，需求如下：
+          - 设计学生和老师的结构体，其中在老师的结构体中有老师的姓名和一个存放5名学生的数组作为成员
+          - 学生的成员有姓名、考试分数
+          - 创建数组存放3名老师，通过函数给每个老师及所带学生赋值
+          - 最终打印出老师数据以及老师所带学生的数据
+          */
+          //注意：没有实现具体输入
+          #include<iostream>
+          #include<string>
+          using namespace std;
+          
+          //学生的结构体
+          struct Student
+          {
+          	string sName;
+          	int score;
+          };
+          
+          
+          // 老师的结构体
+          struct Teacher
+          {
+          	string tName;
+          	struct Student sArray[5];
+          };
+          
+          //赋值函数,开辟空间并赋值
+          void allocateSpace(struct Teacher tArray[], int sz)
+          {
+          	string nameSeed = "ABCDE";
+          	for (int i = 0; i < sz; i++)
+          	{
+          		tArray[i].tName = "Teacher_";
+          		tArray[i].tName += nameSeed[i];//只能叫做给老师做了编号，并不能叫做输入老师姓名
+          		for (int j = 0; j < 5; j++)
+          		{
+          			tArray[i].sArray[j].sName = "Student_";
+          			tArray[i].sArray[j].sName += nameSeed[j];
+          			tArray[i].sArray[j].score = 60;
+          		}
+          	}
+          }
+          
+          //打印所有老师及所带学生的信息
+          void printInfo(struct Teacher tArray[], int sz)
+          {
+          	for (int i = 0; i < sz; i++)
+          	{
+          		cout << "老师姓名：" << tArray[i].tName << endl;
+          		for (int j = 0; j < 5; j++)
+          		{
+          			cout << "\t学生姓名:" << tArray[i].sArray[j].sName << " 分数：" << tArray[i].sArray[j].score << endl;
+          		}
+          	}
+          	cout << endl;
+          }
+          
+          int main()
+          {
+          	//创建3名老师的数组
+          	struct Teacher tArray[3];
+          
+          	//通过函数给3名老师的信息赋值，并给老师所带的学生信息赋值
+          	int sz = sizeof(tArray) / sizeof(tArray[0]);
+          	allocateSpace(tArray, sz);
+          
+          	//打印所有老师及所带学生的信息
+          	printInfo(tArray, sz);
+          
+          	system("pause");
+          	return 0;
+          }
+          ```
+    
     - [9.2结构体案例1（改进版）.cpp](https://github.com/zzx051900/C-/blob/a39f5c2707dd177f4d6719720c9eadf0d43ca457/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/9.2%E7%BB%93%E6%9E%84%E4%BD%93%E6%A1%88%E4%BE%8B1%EF%BC%88%E6%94%B9%E8%BF%9B%E7%89%88%EF%BC%89.cpp)
+    
+      - 代码：
+    
+        - ```c++
+          /*
+          案例描述：学校正在做毕设项目，每名老师带领5个学生，总共有3名老师，需求如下：
+          - 设计学生和老师的结构体，其中在老师的结构体中有老师的姓名和一个存放5名学生的数组作为成员
+          - 学生的成员有姓名、考试分数
+          - 创建数组存放3名老师，通过函数给每个老师及所带学生赋值
+          - 最终打印出老师数据以及老师所带学生的数据
+          */
+          //实现了具体输入
+          #include<iostream>
+          #include<string>
+          using namespace std;
+          
+          //学生的结构体
+          struct Student
+          {
+          	string sName;
+          	int score;
+          };
+          
+          // 老师的结构体
+          struct Teacher
+          {
+          	string tName;
+          	struct Student sArray[5];
+          };
+          
+          //赋值函数,开辟空间并赋值
+          void allocateSpace(struct Teacher tArray[], int sz)
+          {
+          	for (int i = 0; i < sz; i++)
+          	{
+          
+          		cin >> tArray[i].tName;
+          		for (int j = 0; j < 5; j++)
+          		{
+          			cin >> tArray[i].sArray[j].sName;
+          			cin >> tArray[i].sArray[j].score;
+          		}
+          	}
+          }
+          
+          //打印所有老师及所带学生的信息
+          void printInfo(struct Teacher tArray[], int sz)
+          {
+          	for (int i = 0; i < sz; i++)
+          	{
+          		cout << "老师姓名：" << tArray[i].tName << endl;
+          		for (int j = 0; j < 5; j++)
+          		{
+          			cout << "\t学生姓名:" << tArray[i].sArray[j].sName << " 分数：" << tArray[i].sArray[j].score << endl;
+          		}
+          	}
+          	cout << endl;
+          }
+          
+          int main()
+          {
+          	//创建3名老师的数组
+          	struct Teacher tArray[3];
+          
+          	//通过函数给3名老师的信息赋值，并给老师所带的学生信息赋值
+          	int sz = sizeof(tArray) / sizeof(tArray[0]);
+          	allocateSpace(tArray, sz);
+          
+          	//打印所有老师及所带学生的信息
+          	printInfo(tArray, sz);
+          
+          	system("pause");
+          	return 0;
+          }
+          ```
+  
 - 案例2：
   - 案例描述：
     - 设计一个英雄的结构体，包括成员姓名，年龄，性别
     - 创建结构体数组，存放5名英雄
     - 通过冒泡排序，将数组中的英雄按照年龄进行升序排序，最终打印排序后的结果
+    
   - 文件：[10.结构体案例2.cpp](https://github.com/zzx051900/C-/blob/a39f5c2707dd177f4d6719720c9eadf0d43ca457/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/10.%E7%BB%93%E6%9E%84%E4%BD%93%E6%A1%88%E4%BE%8B2.cpp)
+  
+  - 代码：
+  
+    - ```c++
+      /*
+      案例描述：
+      - 设计一个英雄的结构体，包括成员姓名，年龄，性别
+      - 创建结构体数组，存放5名英雄
+      - 通过冒泡排序，将数组中的英雄按照年龄进行升序排序，最终打印排序后的结果
+      */
+      #include<iostream>
+      #include<string>
+      using namespace std;
+      
+      
+      // 英雄的结构体
+      struct Hero
+      {
+      	string name;
+      	int age;
+      	string sex;
+      };
+      
+      //打印所有英雄的信息
+      void printInfo(struct Hero heroArray[], int sz)
+      {
+      	for (int i = 0; i < 5; i++)
+      	{
+      		cout << "英雄姓名:" << heroArray[i].name << " 年龄：" << heroArray[i].age << " 性别：" << heroArray[i].sex << endl;
+      	}
+      	cout << endl;
+      }
+      
+      //冒泡排序
+      void bubblesort(struct Hero heroArray[], int sz)
+      {
+      	struct Hero temp;
+      	for (int i = 0; i < sz - 1; i++)
+      	{
+      		for (int j = 0; j < sz - 1 - i; j++)
+      		{
+      			if (heroArray[j].age > heroArray[j + 1].age)//交换的是整个结构体变量，不只是交换年龄
+      			{
+      				temp = heroArray[j];
+      				heroArray[j] = heroArray[j + 1];
+      				heroArray[j + 1] = temp;
+      			}
+      		}
+      	}
+      }
+      
+      int main()
+      {
+      	//创建5名英雄的数组
+      	struct Hero heroArray[5] =
+      	{
+      		{ "aaa", 20, "男" },
+      		{ "bbb", 18, "女" },
+      		{ "ccc", 26, "男" },
+      		{ "ddd", 24, "男" },
+      		{ "eee", 19, "女" },
+      	};
+      
+      	int sz = sizeof(heroArray) / sizeof(heroArray[0]);
+      	//打印排序前所有英雄的信息
+      	printInfo(heroArray, sz);
+      
+      	//冒泡排序
+      	bubblesort(heroArray, sz);
+      
+      	//打印排序后所有英雄的信息
+      	printInfo(heroArray, sz);
+      
+      	system("pause");
+      	return 0;
+      }
+      ```
 
 # 一阶段案例：通讯录管理系统
 
@@ -1459,7 +1926,13 @@
 
 # 二.C++核心编程
 
-- 本阶段主要针对C++面向对象编程技术做详细讲解，探讨C++中的核心精髓
+- 本阶段主要针对C++面向对象编程`(Object-Oriented Programming)`技术做详细讲解，探讨C++中的核心精髓
+- C++语言能够支持的程序设计范型：
+  - 过程程序设计`(Procedural programming)`
+  - 模块化程序设计`(Modular programming)`
+  - 面向对象程序设计`(Object-oriented programming)`
+  - 类属程序设计`(Generic programming)`
+
 
 ## （一）内存分区模型
 
@@ -1551,7 +2024,7 @@
       delete[] arr;
       ```
 
-## （二）引用
+## （二）引用`(references)`
 
 ###  1.引用的基本使用
 
@@ -1636,7 +2109,7 @@
   - ```c++
     int& test()
     {
-    	static int a = 10;
+    	static int a = 10;0
     	return a;
     }
     
@@ -1680,7 +2153,7 @@
 
 ###  6.常量引用
 
-- 作用：常量引用主要用来修饰形参，方式误操作
+- 作用：常量引用主要用来修饰形参，防止误操作
 
   - 在函数形参列表中，可以加const修饰形参，防止形参改变实参
 
@@ -1695,7 +2168,7 @@
 
 ###  1.函数的默认参数
 
-- 在C++中，函数的型参是可以有默认值的
+- 在C++中，函数的形参是可以有默认值的
 
 - 语法：`返回值类型 函数名(参数 = 默认值)`
 
@@ -1713,7 +2186,7 @@
       }
       ```
 
-  - 如果函数声明有默认参数，函数实现不能有默认参数（声明和实现只能有一个默认参数
+  - 如果函数声明有默认参数，函数实现不能有默认参数（声明和实现只能有一个默认参数）
 
     - ```c++
       //错误案例：
@@ -1725,6 +2198,13 @@
           return a + b;
       }
       //报错：重定义默认参数
+      
+      
+      //正确写法
+      int func(int a, int b)
+      {
+      	return a + b;
+      }
       ```
 
 - 示例：
@@ -1873,11 +2353,15 @@
 
 - C++面向对象三大特性：封装、继承、多态
 - C++认为万事万物都皆为对象，对象上有其属性和行为
-  - 人可以作为对象，属性：姓名、年龄、身高、体重...，行为：走、跑、跳、吃饭、唱歌
-  - 车可以作为对象，属性：轮胎、方向盘、车灯...，行为：载人、放音乐、用空调
+  - 人可以作为对象
+    - 属性：姓名、年龄、身高、体重...
+    - 行为：走、跑、跳、吃饭、唱歌
+  - 车可以作为对象
+    - 属性：轮胎、方向盘、车灯...
+    - 行为：载人、放音乐、用空调
 - 具有相同性质的对象，我们可以将其抽象为类，人属于人类、车属于车类
 
-### 1.封装
+### 1.封装`(encapsulation)`
 
 #### （1）封装的意义
 
@@ -1898,9 +2382,9 @@
     - ```c++
       class 类名
       { 
-          //访问权限：
-          //属性:
-          //行为（函数）:
+          访问权限：
+          属性:
+          行为（函数）:
       };
       ```
 
@@ -2009,47 +2493,48 @@
 
 - 示例：
 
-- ```c++
-  #include<iostream>
-  #include<string>
-  using namespace std;
-  class Person
-  {
-  public:	//公共权限
-  	string m_Name;//姓名
-  protected:	//保护权限
-  	string m_Car;//汽车
-  private:	//私有权限
-  	string m_Password;//个人密码
-  public:
-  	void func()
-  	{
-  		m_Name = "aaa";
-  		m_Car = "拖拉机";
-  		m_Password = "123456";
-  		//三种权限都可在类内正常访问
-  	}		
-  };
-  int main()
-  {
-  	Person p1;
-  	p1.m_Name = "bbb";
-  	//p1.m_Car = "自行车";//保护权限，类外不可访问（报错：成员已声明，不可访问。）
-  	//p1.m_Password = "111111";//私有权限，类外不可访问（报错：成员已声明，不可访问。）
-  
-  	system("pause");
-  	return 0;
-  }
-  ```
+  - ```c++
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    class Person
+    {
+    public:	//公共权限
+    	string m_Name;//姓名
+    protected:	//保护权限
+    	string m_Car;//汽车
+    private:	//私有权限
+    	string m_Password;//个人密码
+    public:
+    	void func()
+    	{
+    		m_Name = "aaa";
+    		m_Car = "拖拉机";
+    		m_Password = "123456";
+    		//三种权限都可在类内正常访问
+    	}		
+    };
+    int main()
+    {
+    	Person p1;
+    	p1.m_Name = "bbb";
+    	//p1.m_Car = "自行车";//保护权限，类外不可访问（报错：成员已声明，不可访问。）
+    	//p1.m_Password = "111111";//私有权限，类外不可访问（报错：成员已声明，不可访问。）
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
+
 
 ####  （2）struct和class的区别
 
-- 在C++中struct和class唯一的区别就在于**默认的访问权限不同**
+- 在C++中`struct`和`class`唯一的区别就在于**默认的访问权限不同**
 
 - 区别：
 
-  - struct默认权限为公共
-  - class默认权限为私有
+  - `struct`默认权限为公共
+  - `class`默认权限为私有
 
 - ```c++
   class C1
@@ -2082,17 +2567,318 @@
 
 - 练习案例1：设计立方体类
   - 设计立方体类（Cube），求出立方体的面积和体积，分别用全局函数和成员函数判断两个立方体是否相等
+  
   - 文件：[12.类和对象案例1-立方体类.cpp](https://github.com/zzx051900/C-/blob/31c167785496f83ed042722763a65d9185fce9b3/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/12.%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1%E6%A1%88%E4%BE%8B1-%E7%AB%8B%E6%96%B9%E4%BD%93%E7%B1%BB.cpp)
+  
+    - 代码：
+  
+      - ```c++
+        //(未完善）
+        #include<iostream>
+        using namespace std;
+        
+        /*
+        立方体类设计：
+        1.创建立方体类
+        2.设计属性
+        3.设计行为：获取立方体面积和体积
+        4.分别用全局函数和成员函数判断两个立方体是否相等
+        */
+        
+        class Cube
+        {
+        public:
+        	//设置长
+        	void setL(int l)
+        	{
+        		m_L = l;
+        	}
+        	//获取长
+        	int getL()
+        	{
+        		return m_L;
+        	}
+        	//设置宽
+        	void setW(int w)
+        	{
+        		m_W = w;
+        	}
+        	//获取宽
+        	int getW()
+        	{
+        		return m_W;
+        	}
+        	//设置高
+        	void setH(int h)
+        	{
+        		m_H = h;
+        	}
+        	//获取高
+        	int getH()
+        	{
+        		return m_H;
+        	}
+        	//获取立方体面积
+        	int calculateS()
+        	{
+        		return 2 * (m_L*m_W + m_L*m_H + m_W*m_H);
+        	}
+        	//获取立方体体积
+        	int calculateV()
+        	{
+        		return m_L * m_W * m_H;
+        	}
+        	//利用成员函数判断两个立方体是否相等（此时参数只传一个，因为又另一个立方体调用的这个成员函数，不需要传参）
+        	bool isSameByClass(Cube &c)
+        	{
+        		//判断条件
+        		//m_L   
+        		//c2.getL()
+        		return 1;
+        	}
+        
+        private:
+        	int m_L;//长
+        	int m_W;//宽
+        	int m_H;//高
+        };
+        
+        bool isSame(Cube &c1, Cube &c2);
+        
+        int main()
+        {
+        	//创建一个立方体对象
+        	Cube c1;
+        	c1.setL(10);//长设为10
+        	c1.setW(10);
+        	c1.setH(10);
+        
+        	cout << "c1的面积为：" << c1.calculateS() << endl;
+        	cout << "c1的体积为：" << c1.calculateV() << endl;
+        
+        	//创建第二个立方体
+        	Cube c2;
+        	c2.setL(10);//长设为10
+        	c2.setW(10);
+        	c2.setH(10);
+        
+        	//利用全局函数判断
+        	bool ret = isSame(c1, c2);
+        	if (ret)
+        	{
+        		cout << "全局函数判断相等" << endl;
+        	}
+        	else
+        	{
+        		cout << "全局函数判断不相等" << endl;
+        	}
+        
+        	//利用成员函数判断
+        	ret = c1.isSameByClass(c2);
+        	if (ret)
+        	{
+        		cout << "成员函数判断相等" << endl;
+        	}
+        	else
+        	{
+        		cout << "成员函数判断不相等" << endl;
+        	}
+        
+        	system("pause");
+        	return 0;
+        }
+        
+        //利用全局函数判断两个立方体是否相等
+        bool isSame(Cube &c1, Cube &c2)
+        {
+        	//判断条件
+        	return 1;
+        }
+        ```
+  
 - 练习案例2：点和圆的关系
   - 设计一个圆形类和一个点类，计算点和圆的关系
+  
   - 文件：
     - [13.类和对象案例2-点和圆关系](https://github.com/zzx051900/C-/tree/31c167785496f83ed042722763a65d9185fce9b3/C%2B%2B%E7%A8%8B%E5%BA%8F%E7%BB%83%E4%B9%A0%E4%BB%A3%E7%A0%81/13.%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1%E6%A1%88%E4%BE%8B2-%E7%82%B9%E5%92%8C%E5%9C%86%E5%85%B3%E7%B3%BB)
+      
       - 13.类和对象案例2-点和圆关系.cpp
+      
+        - ```c++
+          #include<iostream>
+          #include"point.h"
+          #include"circle.h"
+          
+          using namespace std;
+          
+          //函数声明
+          void isInCircle(Circle &c, Point &p);
+          
+          int main()
+          {
+          	Circle c;//创建一个圆
+          	c.setR(10);//设置圆的半径
+          	Point center;//创建圆的圆心
+          	center.setX(10);//设置圆心的x
+          	center.setY(0);//设置圆心的y
+          	c.setCenter(center);//设置圆心
+          	Point p;//创建点
+          	p.setX(10);//设置点的x
+          	p.setY(5);//设置点的y
+          	//p.setY(10);
+          	//p.setY(15);
+          
+          	isInCircle(c, p);
+          
+          	system("pause");
+          	return 0;
+          }
+          
+          //判断点和圆的关系
+          void isInCircle(Circle &c, Point &p)
+          {
+          	//计算两点间距离的平方
+          	int distance = (c.getCenter().getX() - p.getX())*(c.getCenter().getX() - p.getX()) +
+          		(c.getCenter().getY() - p.getY())*(c.getCenter().getY() - p.getY());
+          	//计算半径的平方
+          	int rDistance = c.getR() * c.getR();
+          	if (distance == rDistance)
+          	{
+          		cout << "点在圆上" << endl;
+          	}
+          	else if (distance > rDistance)
+          	{
+          		cout << "点在圆外" << endl;
+          	}
+          	else
+          	{
+          		cout << "点在圆内" << endl;
+          	}
+          }
+          ```
+      
       - point.h
+      
+        - ```c++
+          #pragma once//防止头文件重复包含
+          #include<iostream>
+          using namespace std;
+          
+          //
+          
+          //设计点类
+          class Point
+          {
+          public:
+          	//设置x
+          	void setX(int x);
+          
+          	//获取x
+          	int getX();
+          
+          	//设置y
+          	void setY(int y);
+          
+          	//获取y
+          	int getY();
+          
+          
+          private:
+          	int m_X;//x坐标
+          	int m_Y;//y坐标
+          };
+          ```
+      
       - point.cpp
+      
+        - ```c++
+          #include"point.h"
+          //设计点类
+          
+          
+          //设置x
+          void Point::setX(int x)
+          {
+          	m_X = x;
+          }
+          //获取x
+          int Point::getX()
+          {
+          	return m_X;
+          }
+          //设置y
+          void Point::setY(int y)
+          {
+          	m_Y = y;
+          }
+          //获取y
+          int Point::getY()
+          {
+          	return m_Y;
+          }
+          ```
+      
       - circle.h
+      
+        - ```c++
+          #pragma once
+          #include<iostream>
+          #include"point.h"
+          using namespace std;
+          
+          //设计圆类
+          class Circle
+          {
+          public:
+          	//设置半径
+          	void setR(int r);
+          	
+          	//获取半径
+          	int getR();
+          	
+          	//设置圆心
+          	void setCenter(Point center);
+          	
+          	//获取圆心
+          	Point getCenter();
+          	
+          private:
+          	int m_R;//半径
+          	//在类中，可以让另一个类的作为本类中的成员
+          	Point m_Center;//圆心
+          };
+          ```
+      
       - crecle.cpp
+      
+        - ```c++
+          #include"circle.h"
+          
+          
+          //ÉèÖÃ°ë¾¶
+          void Circle::setR(int r)
+          {
+          	m_R = r;
+          }
+          //»ñÈ¡°ë¾¶
+          int Circle::getR()
+          {
+          	return m_R;
+          }
+          //ÉèÖÃÔ²ÐÄ
+          void Circle::setCenter(Point center)
+          {
+          	m_Center = center;
+          }
+          //»ñÈ¡Ô²ÐÄ
+          Point Circle::getCenter()
+          {
+          	return m_Center;
+          }
+          ```
+    
   - 在类中，可以让另一个类的作为本类中的成员
+  
   - 初步学习将一个大型文件拆分为多个文件
     - 头文件需要添加：`#pragma once//防止头文件重复包含`
     - 将多个类分别创建头文件和cpp文件保存，头文件中的成员函数只保留声明，实现在cpp文件中
@@ -2250,8 +3036,8 @@
 - C++种拷贝构造函数调用时机通常有三种情况：
 
   - 使用一个已经创建完毕的对象来初始化一个新对象
-  - 值传递的方式给函数参数传值
-  - 以值方式返回局部对象
+  - 值传递的方式给函数参数传值（系统自动调用）
+  - 以值方式返回局部对象（系统自动调用）
 
 - 拷贝函数调用时机示例：
 
@@ -2417,7 +3203,7 @@
     	{
     		cout << "Person有参构造函数的调用" << endl;
     		m_Age = age;
-    		m_Height = new int(height);
+    		m_Height = new int(height);	//堆区开辟空间
     	}
     	~Person()	//析构
     	{
@@ -7014,3 +7800,19 @@
 
 - 可避免数组过大或递归过多导致栈溢出报错或程序崩溃的问题（不知道描述是否正常）
 - 项目 -> 属性 -> 链接器 -> 系统 -> 堆栈保留大小（默认为1MB = 1024*1024）将其修改更大
+
+# 常用或可能用到的英文
+
+- implement   实现
+- maintain   维护
+- programming styles   程序设计风格
+- programming paradigms   程序设计范式
+- abstraction   抽象
+- algorithm   算法
+- computation   计算
+- expressions   表达式
+- literals   字面值
+- portability   可移植性
+- aggregate   集合
+- arbitrary   任意的
+- attributes
