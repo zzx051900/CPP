@@ -3532,6 +3532,65 @@
       }
       ```
 
+#### （9）构造、析构与静态成员例题
+
+- ```c++
+  #define _CRT_SECURE_NO_WARNINGS
+  #include<iostream>
+  #include<string>
+  using namespace std;
+  
+  class A
+  {
+  	static int obj_count;
+  public:
+  	A()
+  	{
+  		obj_count++;
+  	}
+  	~A()
+  	{
+  		obj_count--;
+  	}
+  	int get_num()
+  	{
+  		return obj_count;
+  	}
+  };
+  int A::obj_count = 0;
+  A a;	//创建全局对象，构造一次，1
+  
+  int main()
+  {
+  	cout << a.get_num() << endl;
+  
+  	A b, *p, *q;	//创建局部对象，构造一次，2
+  	p = new A;	// 动态创建对象，构造一次，3
+  	cout << a.get_num() << endl;
+  
+  	q = new A[5];	// 动态创建对象数组，构造5次，8
+  	cout << a.get_num() << endl;
+  
+  	delete[] q;	//删除对象数组，析构5次，3
+  	cout << p->get_num() << endl;
+  
+  	for (int i = 0; i < 2; i++)
+  	{
+  		A c;	//每次循环都创建一个局部对象，构造一次，4
+  		cout << c.get_num() << endl;
+  		//每次循环结束后都析构一次，3
+  	}
+  	//循环结束时仍为3
+  	cout << a.get_num() << endl;
+  
+  	delete p;	//删除对象，析构一次，2
+  	cout << b.get_num() << endl;
+  
+  	system("pause");
+  	return 0;
+  }
+  ```
+
 ### 3.C++对象模型和this指针
 
 #### （1）成员变量和成员函数分开存储（？？）
@@ -5096,9 +5155,62 @@
     }
     ```
 
-  - 
-
-
+  - ```c++
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
+    using namespace std;
+    
+    class BASE
+    {
+    protected:
+    	int id;
+    public:
+    	BASE() :id(0){}
+    	int update(int n)
+    	{ 
+    		id += n; 
+    		return id;
+    	}
+    	virtual void hello()
+    	{
+    		cout << "BASE" << endl;
+    	}
+    };
+    
+    class DERIVED : public BASE
+    {
+    public:
+    	DERIVED()
+    	{
+    		id = 1;
+    	}
+    	int update(int n)
+    	{
+    		id += 2*n;
+    		return id;
+    	}
+    	virtual void hello()
+    	{
+    		cout << "DERIVED" << endl;
+    	}
+    };
+    
+    int main()
+    {
+    	BASE* objs[2];
+    	objs[0] = new BASE();
+    	objs[1] = new DERIVED();
+    	for (int i = 0; i < 2; i++)
+    	{
+    		objs[i]->hello();
+    		cout << objs[i]->update(10) << endl;
+    	}
+    
+    	system("pause");
+    	return 0;
+    }
+    ```
 
 #### （2）多态案例1  -  计算机类
 
@@ -8599,18 +8711,30 @@
   }
   ```
 
-## 2.C/C++中string和int相互转换的常用方法
+## 2.C/C++中string和其他类型相互转换的常用方法
 
-- 通过 `std::to_string() `函数转换
+- 通过 `std::to_string() `函数转换，将其他类型转化为`string`类型00
 
   - ```c++
-    #include <iostream>
+    #define _CRT_SECURE_NO_WARNINGS
+    #include<iostream>
+    #include<string>
     using namespace std;
+    
     int main()
     {
-        int num = 123;
-        std::cout << to_string(num);
-        return 0;
+    	int num = 123;
+    	cout << to_string(num) << endl;
+    	string a = to_string(num);
+    	cout << a << endl;
+    
+    	double m = 2.5;
+    	cout << to_string(m) << endl;
+    	a = to_string(m);
+    	cout << a << endl;
+    
+    	system("pause");
+    	return 0;
     }
     ```
 
